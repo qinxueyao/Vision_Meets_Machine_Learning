@@ -1,0 +1,30 @@
+Set up in HPC
+1. log into hpc
+ssh <netid>@prince.hpc.nyu.edu
+
+2. set up virtual environment
+about using virtual environments in Jupyter Notebook and Python:
+https://janakiev.com/blog/jupyter-virtual-envs/
+
+module purge
+module load python3/intel/3.6.3
+mkdir ~/pyenv
+cd pyenv
+virtualenv --system-site-packages py3.6.3
+source ~/pyenv/py3.6.3/bin/activate
+pip install jupyter
+module load cudaXXX-> choose a version by looking at module avail
+### commands to install the right version of pytorch and torch vision: https://pytorch.org/get-started/locally/
+
+python -m ipykernel install --user --name=pyenv
+
+3. submit a gpu job to hpc
+sbatch run-jupyter.sbatch
+then ls, will see a slurmxxx.out
+cat slumxxx.out
+follow the instructions:
+open another terminal, enter:
+ssh -L $port:localhost:$port $USER@prince.hpc.nyu.edu
+then copy paste: http://localhost:${port}/?token=XXXXXXXX into browser
+
+4. in the jupyter notebook, choose pyenv as the kernel
